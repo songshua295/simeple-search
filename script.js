@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     style.textContent = `
         .fixed-container {
             position: fixed;
-            top: 10px;
+            top: 100px;
             right: 10px;
             background-color: white;
             padding: 10px;
