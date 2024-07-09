@@ -1,9 +1,10 @@
 - 搜索引擎:
     trunall: off
     engine:
-      - bing: "https://www.baidu.com/s?wd="
+      - bing: "https://www.bing.com/search?q="
       - 谷歌: "https://www.google.com/search?q="
-- 网盘搜索引擎:
+      - 百度: ""
+- 网盘全搜索on:
     trunall: on
     engine:
       - yiso: "https://yiso.fun/info?searchKey="

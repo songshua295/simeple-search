@@ -35,12 +35,51 @@ document.addEventListener('DOMContentLoaded', function() {
     style.textContent = `
         .fixed-container {
             position: fixed;
-            top: 100px;
-            right: 10px;
-            background-color: white;
-            padding: 10px;
-            border: 1px solid #ccc;
+            top: 200px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--white);
+            padding: 15px;
+            border: 1px solid var(--gray);
             box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            text-align: center;
+             max-width: 1000px; 
+        }
+        #keyword, #searchEngine, #searchButton {
+            font: 14px var(--font-family-sans-serif);
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 300px;
+        }
+        #keyword {
+            margin-right: 10px;
+        }
+        #searchEngine {
+            background-color: var(--white);
+            color: rgba(0,0,0,.85);
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 300px;
+            -webkit-text-size-adjust: 100%;
+            font-size: .875rem;
+        }
+        #searchButton {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+        }
+        #searchButton:hover {
+            background-color: var(--dark);
         }
     `;
     document.head.appendChild(style);
@@ -139,8 +178,5 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             alert('缺少必要的参数');
         };
-		
     }
-	
-
 });
