@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     keywordInput.type = 'text';
     keywordInput.id = 'keyword';
     keywordInput.placeholder = '输入关键字';
-    // 设置输入框的初始值为 URL 参数中的 name 参数值
+    // 设置输入框的初始值为 URL 参数中的 searchkey 参数值
     const urlParams = new URLSearchParams(window.location.search);
-    const initialKeyword = urlParams.get('name');
+    const initialKeyword = urlParams.get('searchkey');
     if (initialKeyword) {
         keywordInput.value = initialKeyword;
     }
@@ -118,23 +118,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // 执行搜索操作
     function search() {
         const keyword = keywordInput.value.trim();
-        const selectedOption = searchEngineSelect.options[searchEngineSelect.selectedIndex];
-        const url = selectedOption.value;
-        const optgroup = selectedOption.parentElement;
-        const trunall = optgroup.dataset.trunall === 'on'; // 从 optgroup 获取 trunall 属性
+        const engine = urlParams.get('engine');
+        const type = urlParams.get('type');
 
-        // 构建带参数的 URL
-        let searchUrl = url + encodeURIComponent(keyword);
+        // 根据 type 查找对应的 optgroup
+        const optgroup = Array.from(searchEngineSelect.children).find(opt => opt.label === type);
 
-        // 获取选中的引擎组及其所有选项
-        if (trunall) {
-            const allOptions = optgroup.querySelectorAll('option');
-            allOptions.forEach(option => {
-                const optionUrl = option.value + encodeURIComponent(keyword);
-                window.open(optionUrl, '_blank');
-            });
+        if (engine && optgroup && keyword) {
+            const selectedOption = Array.from(optgroup.children).find(opt => opt.value === engine);
+            if (selectedOption) {
+                const trunall = optgroup.dataset.trunall === 'on';
+                if (trunall) {
+                    const allOptions = optgroup.querySelectorAll('option');
+                    allOptions.forEach(option => {
+                        const searchUrl = option.value + encodeURIComponent(keyword);
+                        window.open(searchUrl, '_blank');
+                    });
+                } else {
+                    const searchUrl = selectedOption.value + encodeURIComponent(keyword);
+                    window.open(searchUrl, '_blank');
+                }
+            } else {
+                alert('未找到匹配的搜索引擎');
+            }
         } else {
-            window.open(searchUrl, '_blank');
+            alert('缺少必要的参数');
         }
     }
 });
