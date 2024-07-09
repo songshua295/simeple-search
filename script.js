@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
             border-radius: 5px;
             text-align: center;
-             max-width: 1000px; 
+            max-width: 1000px;
         }
         #keyword, #searchEngine, #searchButton {
             font: 14px var(--font-family-sans-serif);
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 等待 js-yaml 库加载完成后执行
     script.onload = function() {
         // 加载 YAML 配置文件的路径
-        fetch('https://raw.githubusercontent.com/songshua295/simeple-search/master/config.yaml')
+        fetch('config.yaml')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -179,4 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('缺少必要的参数');
         };
     }
+
+    // 页面加载完后自动将焦点聚焦在输入框上
+    keywordInput.focus();
 });
