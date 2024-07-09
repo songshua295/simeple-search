@@ -3,14 +3,27 @@
     engine:
       - bing: "https://www.bing.com/search?q="
       - 谷歌: "https://www.google.com/search?q="
-      - 百度: ""
+      - 百度: "https://www.baidu.com/s?wd="
+      - 夸克: "https://s.quark.cn/s?q="
+      - 鸭子: "https://duckduckgo.com/?ia=web&q="
 - 网盘全搜索on:
     trunall: on
     engine:
       - yiso: "https://yiso.fun/info?searchKey="
       - 混合盘: "https://hunhepan.com/search?q="
+      - 天天: "https://www.daysou.com/s?q="
+      - 秒搜: "https://miaosou.fun/info?searchKey="
+      - 毕方: "https://www.bifangpu.com/resource/search/"
+      - 云盘盘: "https://www.yppan.com/?s="
 - 单个网盘:
     trunall: off
     engine:
       - yiso: "https://yiso.fun/info?searchKey="
       - 混合盘: "https://hunhepan.com/search?q="
+- 求职:
+    trunall: off
+    engine:
+      - 猎聘: "https://www.liepin.com/zhaopin/?key="
+      - 前程无忧: "https://search.51job.com/?"
+      - 拉钩: "https://www.lagou.com/jobs/list_"
+      - 猎聘: "https://www.liepin.com/zhaopin/?key="
