@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 等待 js-yaml 库加载完成后执行
     script.onload = function() {
         // 加载 YAML 配置文件的路径
-        fetch('https://raw.githubusercontent.com/songshua295/simeple-search/0a6e6650da1290ee299eaac5eb3577e1e607aaa1/config.yaml')
+        fetch('https://raw.githubusercontent.com/songshua295/simeple-search/master/config.yaml')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
