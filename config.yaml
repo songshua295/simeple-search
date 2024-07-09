@@ -1,0 +1,15 @@
+- 搜索引擎:
+    trunall: off
+    engine:
+      - 谷歌: "https://www.google.com/search?q="
+      - bing: "https://www.baidu.com/s?wd="
+- 网盘搜索引擎:
+    trunall: on
+    engine:
+      - yiso: "https://yiso.fun/info?searchKey="
+      - 混合盘: "https://hunhepan.com/search?q="
+- 单个网盘:
+    trunall: off
+    engine:
+      - yiso: "https://yiso.fun/info?searchKey="
+      - 混合盘: "https://hunhepan.com/search?q="
