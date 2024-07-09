@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 等待 js-yaml 库加载完成后执行
     script.onload = function() {
-        // 加载 YAML 配置文件
-        fetch('http://127.0.0.1:456/config.yaml')
+        // 加载 YAML 配置文件的路径
+        fetch('/config.yaml')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
