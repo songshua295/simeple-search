@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     keywordInput.placeholder = '输入关键字';
     // 设置输入框的初始值为 URL 参数中的 searchkey 参数值
     const urlParams = new URLSearchParams(window.location.search);
-    const initialKeyword = urlParams.get('searchkey');
+    const initialKeyword = urlParams.get('s');
     if (initialKeyword) {
         keywordInput.value = initialKeyword;
     }
@@ -19,11 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // 创建下拉菜单
     const searchEngineSelect = document.createElement('select');
     searchEngineSelect.id = 'searchEngine';
-    // 设置下拉菜单的初始值为 URL 参数中的 engine 参数值
-    const initialEngine = urlParams.get('engine');
-    if (initialEngine) {
-        searchEngineSelect.value = initialEngine;
-    }
     fixedContainer.appendChild(searchEngineSelect);
 
     // 创建按钮
@@ -68,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 try {
                     const config = jsyaml.load(data);
-                    populateSelect(config);
+                    populateSelect(config, urlParams.get('engine'));
                 } catch (e) {
                     console.error('Error parsing YAML file:', e);
                 }
@@ -77,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // 填充 select 元素
-    function populateSelect(config) {
+    function populateSelect(config, initialEngine) {
         config.forEach(item => {
             const key = Object.keys(item)[0];
             const optgroup = document.createElement('optgroup');
@@ -87,10 +82,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             optgroup.dataset.trunall = trunall; // 将 trunall 属性添加到 optgroup 上
 
-            engine.forEach(engine => {
+            engine.forEach(engineObj => {
+                const engineName = Object.keys(engineObj)[0];
+                const engineUrl = engineObj[engineName];
+
                 const option = document.createElement('option');
-                option.text = Object.keys(engine)[0];
-                option.value = engine[Object.keys(engine)[0]];
+                option.text = engineName;
+                option.value = engineUrl;
                 optgroup.appendChild(option);
             });
 
@@ -99,7 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 设置下拉菜单的初始值为 URL 参数中的 engine 参数值
         if (initialEngine) {
-            searchEngineSelect.value = initialEngine;
+            // 遍历搜索引擎选项，找到匹配的项并设置为初始选中状态
+            Array.from(searchEngineSelect.options).forEach(option => {
+                if (option.text === initialEngine) {
+                    option.selected = true;
+                }
+            });
         }
     }
 
@@ -118,31 +121,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // 执行搜索操作
     function search() {
         const keyword = keywordInput.value.trim();
-        const engine = urlParams.get('engine');
-        const type = urlParams.get('type');
+        const engine = searchEngineSelect.value;
 
-        // 根据 type 查找对应的 optgroup
-        const optgroup = Array.from(searchEngineSelect.children).find(opt => opt.label === type);
-
-        if (engine && optgroup && keyword) {
-            const selectedOption = Array.from(optgroup.children).find(opt => opt.value === engine);
-            if (selectedOption) {
-                const trunall = optgroup.dataset.trunall === 'on';
-                if (trunall) {
-                    const allOptions = optgroup.querySelectorAll('option');
-                    allOptions.forEach(option => {
-                        const searchUrl = option.value + encodeURIComponent(keyword);
-                        window.open(searchUrl, '_blank');
-                    });
-                } else {
-                    const searchUrl = selectedOption.value + encodeURIComponent(keyword);
+        if (engine && keyword) {
+            const optgroup = Array.from(searchEngineSelect.children).find(opt => opt.label === searchEngineSelect.selectedOptions[0].parentNode.label);
+            const trunall = optgroup.dataset.trunall === 'on';
+            if (trunall) {
+                const allOptions = optgroup.querySelectorAll('option');
+                allOptions.forEach(option => {
+                    const searchUrl = option.value + encodeURIComponent(keyword);
                     window.open(searchUrl, '_blank');
-                }
+                });
             } else {
-                alert('未找到匹配的搜索引擎');
+                const searchUrl = engine + encodeURIComponent(keyword);
+                window.open(searchUrl, '_blank');
             }
         } else {
             alert('缺少必要的参数');
-        }
+        };
+		
     }
+	
+
 });
